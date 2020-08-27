@@ -4,7 +4,7 @@
 
 ## Task
 
-Create a private github repository called `AME220Fall2020` and add me
+Create a private github repository called `AME494Fall2020` and add me
 (`tejaswigowda`) as
 a collaborator. The repository should contain a `README.md` that has the
 following information:
