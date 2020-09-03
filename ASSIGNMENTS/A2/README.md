@@ -21,3 +21,7 @@ Section formatting. Use of table, image, hyperlinks and lists.
 
 ## Submission
 Code on Github + please email url.
+
+
+## Resources
+https://www.wikihow.com/Create-an-Ubuntu-Server-on-Amazon-Web-Services
