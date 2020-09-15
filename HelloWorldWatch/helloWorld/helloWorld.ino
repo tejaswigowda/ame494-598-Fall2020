@@ -10,8 +10,8 @@ void setup()
     ttgo->begin();
     ttgo->openBL();
 
-    ttgo->tft->fillScreen(TFT_BLACK);
-    ttgo->tft->setTextColor(TFT_WHITE, TFT_BLACK);
+    ttgo->tft->fillScreen(TFT_WHITE);
+    ttgo->tft->setTextColor(TFT_BLACK, TFT_WHITE);
     ttgo->tft->setTextFont(4);
     ttgo->tft->drawString("Hello World",  5, 10);
 }
