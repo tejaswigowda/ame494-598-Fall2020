@@ -1,4 +1,8 @@
 #include <Arduino.h>
+#define LILYGO_WATCH_2019_WITH_TOUCH
+#include <LilyGoWatch.h>
+
+TTGOClass *ttgo;
 
 char * HOSTNAME = "testing";
 char * WifiPASS = "12345678";
@@ -12,8 +16,16 @@ WebServer server(80);
 
 void setup() {
     Serial.begin(115200);
-    pinMode(21, OUTPUT);
 
+    ttgo = TTGOClass::getWatch();
+    ttgo->begin();
+    ttgo->openBL();
+
+    ttgo->tft->fillScreen(TFT_WHITE);
+    ttgo->tft->setTextColor(TFT_BLACK, TFT_WHITE);
+    ttgo->tft->setTextFont(4);
+    ttgo->tft->drawString("Ready",  5, 10);
+    
     // Start Wifi AP
     WiFi.mode(WIFI_AP_STA);
     WiFi.softAP(HOSTNAME, WifiPASS);
@@ -21,14 +33,16 @@ void setup() {
     
     server.on("/on", []() {
       Serial.println(1);
-      digitalWrite(21, HIGH);
-      server.send(200, "");
+      ttgo->tft->fillScreen(TFT_WHITE);
+       ttgo->tft->drawString("ON",  5, 10);  
+       server.send(200, "");
     });
 
     server.on("/off", []() {
       Serial.println(0);
-      digitalWrite(21, LOW);
-      server.send(200, "");
+      ttgo->tft->fillScreen(TFT_WHITE);
+       ttgo->tft->drawString("ON",  5, 10);  
+       server.send(200, "");
     });
  
     server.begin();

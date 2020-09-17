@@ -1,5 +1,7 @@
-void setup() {
+#define LILYGO_WATCH_2019_WITH_TOUCH
+#include <LilyGoWatch.h>
 
+void setup() {
   pinMode(22, OUTPUT);
   pinMode(21, OUTPUT);
 }
