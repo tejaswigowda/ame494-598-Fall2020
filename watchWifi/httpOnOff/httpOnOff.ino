@@ -41,7 +41,7 @@ void setup() {
     server.on("/off", []() {
       Serial.println(0);
       ttgo->tft->fillScreen(TFT_WHITE);
-       ttgo->tft->drawString("ON",  5, 10);  
+       ttgo->tft->drawString("OFF",  5, 10);  
        server.send(200, "");
     });
  
