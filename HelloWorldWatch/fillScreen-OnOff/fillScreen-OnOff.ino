@@ -3,14 +3,20 @@
 
 TTGOClass *ttgo;
 
-bool screenOn = true;
+int screenOn = 0;
 
 void pressed()
 {
-  screenOn = !screenOn;
+
 }
 void released()
 {
+  if(screenOn == 0){
+    screenOn = 1;
+  }
+  else{
+    screenOn = 0;
+  }
 }
 
 void setup()
@@ -28,16 +34,13 @@ void setup()
 void loop()
 {
     ttgo->button->loop();
-      Serial.println(screenOn);
+    Serial.println(screenOn);
 
-    if(screenOn){
-      Serial.println("R");
+    if(screenOn == 0){
       ttgo->tft->fillScreen(TFT_RED);
       delay(1000);
-      Serial.println("G");
       ttgo->tft->fillScreen(TFT_GREEN);
       delay(1000);
-      Serial.println("B");
       ttgo->tft->fillScreen(TFT_BLUE);
       delay(1000);
     }
