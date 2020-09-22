@@ -16,8 +16,14 @@ WebServer server(80);
 void setup() {
     Serial.begin(115200);
 
-    pinMode(21, OUTPUT);
+    ttgo = TTGOClass::getWatch();
+    ttgo->begin();
+    ttgo->openBL();
 
+    ttgo->tft->fillScreen(TFT_WHITE);
+    ttgo->tft->setTextColor(TFT_BLACK, TFT_WHITE);
+    ttgo->tft->setTextFont(4);
+    ttgo->tft->drawString("Ready",  5, 10);
 
 
 
@@ -33,13 +39,15 @@ void setup() {
 
     
     server.on("/on", []() {
-      digitalWrite(21, 1);
-      server.send(200, "text/html", "<html><head></head><body><a href=\"./on\">on</a><br><a href=\"./off\">off</a></body><html>");
+      ttgo->tft->fillScreen(TFT_WHITE);
+       ttgo->tft->drawString("ON",  5, 10);  
+       server.send(200, "text/html", "<html><head></head><body><a href=\"./on\">on</a><br><a href=\"./off\">off</a></body><html>");
     });
 
     server.on("/off", []() {
-      digitalWrite(21, 0);
-      server.send(200, "text/html", "<html><head></head><body><a href=\"./on\">on</a><br><a href=\"./off\">off</a></body><html>");
+      ttgo->tft->fillScreen(TFT_WHITE);
+       ttgo->tft->drawString("OFF",  5, 10);  
+       server.send(200, "text/html", "<html><head></head><body><a href=\"./on\">on</a><br><a href=\"./off\">off</a></body><html>");
      });
 
  
