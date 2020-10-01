@@ -19,6 +19,7 @@ http://localhost:1234/div?a=1&b=4
 ## Usage (handout)
 
 $ `npm install --save-dev express body-parser errorhandler method-override`
+
 $ `node mathServer.js`
 
 Go to <http://127.0.0.1:1234> in your browser.
