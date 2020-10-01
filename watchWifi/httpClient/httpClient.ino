@@ -39,7 +39,7 @@ void loop() {
     if(WiFi.status()== WL_CONNECTED){
               
       response = httpGETRequest(serverName);
-      Serial.println(response`);
+      Serial.println(response);
 
     }
     else {
