@@ -5,7 +5,7 @@ const char* ssid = "NETGEAR31";
 const char* password = "fluffywind2904";
 
 //Your Domain name with URL path or IP address with path
-const char* serverName = "http://google.com/";
+const char* serverName = "http://www.google.com/";
 
 // the following variables are unsigned longs because the time, measured in
 // milliseconds, will quickly become a bigger number than can be stored in an int.
