@@ -45,7 +45,7 @@ void setup() {
     
     server.on("/", []() {
       digitalWrite(21, 1);
-      int v = server.arg("v").toInt();
+      String v = server.arg("v");
       
       Serial.println(v);
 

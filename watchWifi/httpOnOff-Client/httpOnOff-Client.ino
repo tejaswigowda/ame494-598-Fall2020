@@ -1,5 +1,8 @@
 #include <Arduino.h>
+#define LILYGO_WATCH_2019_WITH_TOUCH
+#include <LilyGoWatch.h>
 
+TTGOClass *ttgo;
 
 
 char * HOSTNAME = "test";
