@@ -1,14 +1,46 @@
-#include "config.h"
-
+#define LILYGO_WATCH_2019_WITH_TOUCH 
+#include <LilyGoWatch.h>
 TTGOClass *watch;
 TFT_eSPI *tft;
 BMA *sensor;
 
-void setup()
-{
-    Serial.begin(115200);
 
-    // Get TTGOClass instance
+#include <WiFi.h>
+#include <HTTPClient.h>
+
+
+const char* ssid = "NETGEAR31";
+const char* password = "fluffywind2904";
+
+//Your Domain name with URL path or IP address with path
+const char* serverName = "http://www.google.com/";
+
+// the following variables are unsigned longs because the time, measured in
+// milliseconds, will quickly become a bigger number than can be stored in an int.
+unsigned long lastTime = 0;
+// Timer set to 10 minutes (600000)
+//unsigned long timerDelay = 600000;
+// Set timer to 5 seconds (5000)
+unsigned long timerDelay = 5000;
+
+String response;
+
+void setup() {
+  Serial.begin(115200);
+
+  WiFi.begin(ssid, password);
+  Serial.println("Connecting");
+  while(WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("");
+  Serial.print("Connected to WiFi network with IP Address: ");
+  Serial.println(WiFi.localIP());
+ 
+  Serial.println("Timer set to 5 seconds (timerDelay variable), it will take 5 seconds before publishing the first reading.");
+
+      // Get TTGOClass instance
     watch = TTGOClass::getWatch();
 
     // Initialize the hardware, the BMA423 sensor has been initialized internally
@@ -80,26 +112,56 @@ void setup()
     tft->drawString("BMA423 accel",  25, 50, 4);
     tft->setTextFont(4);
     tft->setTextColor(TFT_WHITE, TFT_BLACK);
+    
 }
 
-void loop()
-{
-    Accel acc;
+void loop() {
+  if ((millis() - lastTime) > timerDelay) {
+    //Check WiFi connection status
+    if(WiFi.status()== WL_CONNECTED){
+
+       Accel acc;
 
     // Get acceleration data
-    bool res = sensor->getAccel(acc);
+      bool res = sensor->getAccel(acc);
+    
+      int x = acc.x;
+      int y = acc.y;
+      int z = acc.z;
+      String url = serverName + "?x=" + x + "&y=" + y + "&z=" + z;        
+      response = httpGETRequest(url);
+      Serial.println(response);
 
-    if (res == false) {
-        Serial.println("getAccel FAIL");
-    } else {
-        // Show the data
-        tft->fillRect(98, 100, 70, 85, TFT_BLACK);
-        tft->setCursor(80, 100);
-        tft->print("X:"); tft->println(acc.x);
-        tft->setCursor(80, 130);
-        tft->print("Y:"); tft->println(acc.y);
-        tft->setCursor(80, 160);
-        tft->print("Z:"); tft->println(acc.z);
     }
-    delay(2000);
+    else {
+      Serial.println("WiFi Disconnected");
+    }
+    lastTime = millis();
+  }
+}
+
+String httpGETRequest(const char* serverName) {
+  HTTPClient http;
+    
+  // Your IP address with path or Domain name with URL path 
+  http.begin(serverName);
+  
+  // Send HTTP POST request
+  int httpResponseCode = http.GET();
+  
+  String payload = "{}"; 
+  
+  if (httpResponseCode>0) {
+    Serial.print("HTTP Response code: ");
+    Serial.println(httpResponseCode);
+    payload = http.getString();
+  }
+  else {
+    Serial.print("Error code: ");
+    Serial.println(httpResponseCode);
+  }
+  // Free resources
+  http.end();
+
+  return payload;
 }
