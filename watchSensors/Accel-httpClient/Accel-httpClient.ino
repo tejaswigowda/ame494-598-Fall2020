@@ -128,8 +128,8 @@ void loop() {
       int x = acc.x;
       int y = acc.y;
       int z = acc.z;
-      String url = serverName + "?x=" + x + "&y=" + y + "&z=" + z;        
-      response = httpGETRequest(url);
+      String url = String(serverName) + "?x=" + x + "&y=" + y + "&z=" + z;        
+      response = httpGETRequest(url.c_str());
       Serial.println(response);
 
     }
