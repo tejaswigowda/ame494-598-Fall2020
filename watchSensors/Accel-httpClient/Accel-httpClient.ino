@@ -1,3 +1,9 @@
+
+
+#include <WiFi.h>
+#include <HTTPClient.h>
+
+
 #define LILYGO_WATCH_2019_WITH_TOUCH 
 #include <LilyGoWatch.h>
 TTGOClass *watch;
@@ -5,15 +11,11 @@ TFT_eSPI *tft;
 BMA *sensor;
 
 
-#include <WiFi.h>
-#include <HTTPClient.h>
-
-
 const char* ssid = "NETGEAR31";
 const char* password = "fluffywind2904";
 
 //Your Domain name with URL path or IP address with path
-const char* serverName = "http://www.google.com/";
+const char* serverName = "http://www.google.com";
 
 // the following variables are unsigned longs because the time, measured in
 // milliseconds, will quickly become a bigger number than can be stored in an int.
@@ -27,18 +29,6 @@ String response;
 
 void setup() {
   Serial.begin(115200);
-
-  WiFi.begin(ssid, password);
-  Serial.println("Connecting");
-  while(WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("");
-  Serial.print("Connected to WiFi network with IP Address: ");
-  Serial.println(WiFi.localIP());
- 
-  Serial.println("Timer set to 5 seconds (timerDelay variable), it will take 5 seconds before publishing the first reading.");
 
       // Get TTGOClass instance
     watch = TTGOClass::getWatch();
@@ -112,11 +102,25 @@ void setup() {
     tft->drawString("BMA423 accel",  25, 50, 4);
     tft->setTextFont(4);
     tft->setTextColor(TFT_WHITE, TFT_BLACK);
-    
+
+
+      WiFi.begin(ssid, password);
+  Serial.println("Connecting");
+  while(WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("");
+  Serial.print("Connected to WiFi network with IP Address: ");
+  Serial.println(WiFi.localIP());
+ 
+  Serial.println("Timer set to 5 seconds (timerDelay variable), it will take 5 seconds before publishing the first reading.");
+
+
 }
 
 void loop() {
-  if ((millis() - lastTime) > timerDelay) {
+ if ((millis() - lastTime) > timerDelay) {
     //Check WiFi connection status
     if(WiFi.status()== WL_CONNECTED){
 
@@ -128,8 +132,9 @@ void loop() {
       int x = acc.x;
       int y = acc.y;
       int z = acc.z;
-      String url = String(serverName) + "?x=" + x + "&y=" + y + "&z=" + z;        
-      response = httpGETRequest(url.c_str());
+      String url = String(serverName) + "?x=" + x + "&y=" + y + "&z=" + z; 
+      Serial.println(url);       
+      response = httpGETRequest(serverName);
       Serial.println(response);
 
     }
