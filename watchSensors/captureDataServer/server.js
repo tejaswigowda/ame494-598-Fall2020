@@ -13,6 +13,7 @@ app.get("/", function (req, res) {
 });
 
 app.get("/sendData", function (req, res) {
+  console.log(req.url)
     accX = req.query.x
     accY = req.query.y
     accZ = req.query.z
