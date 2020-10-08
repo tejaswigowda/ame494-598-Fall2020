@@ -15,7 +15,7 @@ const char* ssid = "NETGEAR31";
 const char* password = "fluffywind2904";
 
 //Your Domain name with URL path or IP address with path
-const char* serverName = "http://www.google.com";
+const char* serverName = "http://192.168.0.232:1234/sendData";
 
 // the following variables are unsigned longs because the time, measured in
 // milliseconds, will quickly become a bigger number than can be stored in an int.
@@ -134,7 +134,7 @@ void loop() {
       int z = acc.z;
       String url = String(serverName) + "?x=" + x + "&y=" + y + "&z=" + z; 
       Serial.println(url);       
-      response = httpGETRequest(serverName);
+      response = httpGETRequest(url.c_str());
       Serial.println(response);
 
     }
