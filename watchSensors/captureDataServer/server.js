@@ -19,8 +19,8 @@ app.get("/sendData", function (req, res) {
     accX = req.query.x
     accY = req.query.y
     accZ = req.query.z
-    
     req.query.time = new Date().getTime();
+
     db.collection("data").insert(req.query, function(result, err){
       res.send("1");
     });
