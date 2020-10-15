@@ -1,18 +1,18 @@
 <!doctype html>
 <html>
 <head>
+<script src='asyncReq.js'></script>
+<script>
+function updateData()
+{
+  loadURL("./getData", function(data){
+    document.getElementById("results").innerHTML = data;
+  })
+}
+</script>
 </head>
 <body onload='updateData()'>
 <h1> Accel Data </h1>
 <div id='results'> </div>
 </body>
-<script src='asyncReq.js'>
-<script>
-function updateData()
-{
-  loadURL("./getData", function(data){
-    document.getElementbyId("results") = data;
-  })
-}
-</script>
 </html>
