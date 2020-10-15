@@ -24,12 +24,13 @@ app.get("/sendData", function (req, res) {
 
 
 app.get("/getData", function (req, res) {
-  var ret = "";
-    ret += "X: " + accX + "\n";
-    ret += "Y: " + accY + "\n";
-    ret += "Z: " + accZ + "\n";
+  var ret = {}
+
+    ret.x = accX; 
+    ret.y = accY; 
+    ret.z = accZ; 
     
-    res.send(ret);
+    res.send(JSON.stringify(ret));
 });
 
 app.use(methodOverride());
