@@ -22,7 +22,7 @@ function getXMLHTTPRequest()
 }
 
 
-function loadFile(filename, callback)
+function loadURL(filename, callback)
 {
     var aXMLHttpRequest = getXMLHTTPRequest();
     var allData;
