@@ -3,10 +3,13 @@ var app = express();
 var bodyParser = require('body-parser');
 var errorHandler = require('errorhandler');
 var methodOverride = require('method-override');
+var MS = require("mongoskin");
 var hostname = process.env.HOSTNAME || 'localhost';
 var port = 1234;
 
 var accX, accY, accZ;
+
+var db = MS.db("mongodb://13.56.213.25:27017/sensorData");
 
 app.get("/", function (req, res) {
     res.redirect("index.html")
@@ -17,7 +20,9 @@ app.get("/sendData", function (req, res) {
     accY = req.query.y
     accZ = req.query.z
     
-    res.send("1");
+    db.collection("data").insert(req.query, function(result, err){
+      res.send("1");
+    });
 });
 
 
