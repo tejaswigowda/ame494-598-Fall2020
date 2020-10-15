@@ -22,6 +22,16 @@ app.get("/sendData", function (req, res) {
     res.send("1");
 });
 
+
+app.get("/getData", function (req, res) {
+  var ret = "";
+    ret += "X: " + accX + "\n";
+    ret += "Y: " + accY + "\n";
+    ret += "Z: " + accZ + "\n";
+    
+    res.send(ret);
+});
+
 app.use(methodOverride());
 app.use(bodyParser());
 app.use(express.static(__dirname + '/public'));
