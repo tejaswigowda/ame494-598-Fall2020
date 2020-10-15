@@ -20,6 +20,7 @@ app.get("/sendData", function (req, res) {
     accY = req.query.y
     accZ = req.query.z
     
+    req.query.time = new Date().getTime();
     db.collection("data").insert(req.query, function(result, err){
       res.send("1");
     });
