@@ -13,7 +13,7 @@ BMA *sensor;
 
 const char* ssid = "NETGEAR31";
 const char* password = "fluffywind2904";
-
+UDD33
 //Your Domain name with URL path or IP address with path
 const char* serverName = "http://192.168.0.234:1234/sendData";
 
