@@ -45,7 +45,7 @@ void loop() {
   Serial.println(String((float)humidity) + "% H");
 
       ttgo->tft->drawString(String(temperature) + " *C",  5, 10);
-      ttgo->tft->drawString(String(humidity) + " % H",  15, 10);
+      ttgo->tft->drawString(String(humidity) + " % H",  5, 40);
 
 
   // DHT11 sampling rate is 1HZ.
