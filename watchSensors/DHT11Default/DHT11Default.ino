@@ -4,6 +4,25 @@ TTGOClass *ttgo;
 
 #include <SimpleDHT.h>
 
+#include <WiFi.h>
+#include <HTTPClient.h>
+
+
+const char* ssid = "NETGEAR31";
+const char* password = "fluffywind2904";
+
+//Your Domain name with URL path or IP address with path
+const char* serverName = "http://192.168.0.235:1234/sendData";
+
+// the following variables are unsigned longs because the time, measured in
+// milliseconds, will quickly become a bigger number than can be stored in an int.
+unsigned long lastTime = 0;
+// Timer set to 10 minutes (600000)
+//unsigned long timerDelay = 600000;
+// Set timer to 5 seconds (5000)
+unsigned long timerDelay = 300;
+
+String response;
 
 // for DHT11,
 //      VCC: 5V or 3V
@@ -23,6 +42,22 @@ void setup() {
     ttgo->tft->fillScreen(TFT_BLACK);
     ttgo->tft->setTextColor(TFT_WHITE, TFT_BLACK);
     ttgo->tft->setTextFont(4);
+
+    
+      WiFi.begin(ssid, password);
+  Serial.println("Connecting");
+  while(WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("");
+  Serial.print("Connected to WiFi network with IP Address: ");
+  Serial.println(WiFi.localIP());
+ 
+  Serial.println("Timer set to 5 seconds (timerDelay variable), it will take 5 seconds before publishing the first reading.");
+
+
+
 }
 
 void loop() {
@@ -47,7 +82,42 @@ void loop() {
       ttgo->tft->drawString(String((int)temperature*1.8 + 32) + " *F",  5, 10);
       ttgo->tft->drawString(String(humidity) + " % H",  5, 40);
 
+      int t = (int)temperature;
+      int h = (int)humidity;
+      String url = String(serverName) + "?t=" + t + "&h=" + h;
+      Serial.println(url);       
+      response = httpGETRequest(url.c_str());
+      Serial.println(response);
+
+
 
   // DHT11 sampling rate is 1HZ.
   delay(3500);
+}
+
+
+String httpGETRequest(const char* serverName) {
+  HTTPClient http;
+    
+  // Your IP address with path or Domain name with URL path 
+  http.begin(serverName);
+  
+  // Send HTTP POST request
+  int httpResponseCode = http.GET();
+  
+  String payload = "{}"; 
+  
+  if (httpResponseCode>0) {
+    Serial.print("HTTP Response code: ");
+    Serial.println(httpResponseCode);
+    payload = http.getString();
+  }
+  else {
+    Serial.print("Error code: ");
+    Serial.println(httpResponseCode);
+  }
+  // Free resources
+  http.end();
+
+  return payload;
 }
