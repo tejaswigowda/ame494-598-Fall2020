@@ -44,7 +44,7 @@ void loop() {
   Serial.print(String((float)temperature) + "* C, ");
   Serial.println(String((float)humidity) + "% H");
 
-      ttgo->tft->drawString(String(temperature) + " *C",  5, 10);
+      ttgo->tft->drawString(String((int)temperature*1.8 + 32) + " *F",  5, 10);
       ttgo->tft->drawString(String(humidity) + " % H",  5, 40);
 
 
