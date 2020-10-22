@@ -1,4 +1,4 @@
-const int ledPin = 22;
+const int ledPin = 25;
 
 // setting PWM properties
 const int freq = 5000;

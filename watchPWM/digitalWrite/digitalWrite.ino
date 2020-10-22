@@ -2,15 +2,15 @@
 #include <LilyGoWatch.h>
 
 void setup() {
-  pinMode(22, OUTPUT);
-  pinMode(21, OUTPUT);
+  pinMode(25, OUTPUT);
+  pinMode(26, OUTPUT);
 }
 
 void loop() {
-  digitalWrite(22, HIGH);
-  digitalWrite(21, HIGH);
+  digitalWrite(25, HIGH);
+  digitalWrite(26, HIGH);
   delay(1800);
-  digitalWrite(22, LOW);
-  digitalWrite(21, LOW);
+  digitalWrite(25, LOW);
+  digitalWrite(26, LOW);
   delay(1200);
 }
