@@ -8,9 +8,9 @@ void setup() {
 
 void loop() {
   digitalWrite(25, HIGH);
-  digitalWrite(26, HIGH);
-  delay(1800);
-  digitalWrite(25, LOW);
   digitalWrite(26, LOW);
-  delay(1200);
+  delay(5000);
+  digitalWrite(25, LOW);
+  digitalWrite(26, HIGH);
+  delay(5000);
 }
