@@ -18,7 +18,7 @@ function getDataFromServer()
 			var timestamp = parseInt(obj[i].ts || obj[i].time);
 			if(timestamp > lastAddedTS){
 				columns[0].push(getTSInFormat(timestamp));
-				columns[1].push(parseFloat(obj[i].t || 0));
+				columns[1].push(parseFloat(obj[i].t || 0)*1.8+32);
 				columns[2].push(parseFloat(obj[i].h || 0));
 				lastAddedTS = timestamp;
 			}
@@ -45,8 +45,8 @@ function start(){
       console.log(obj[i].ts);
       console.log(timestamp);
 			columns[0].push(getTSInFormat(timestamp));
-				columns[1].push(parseFloat(obj[i].t || 0));
-				columns[2].push(parseFloat(obj[i].h || 0));
+			columns[1].push(parseFloat(obj[i].t || 0)*1.8+32);
+			columns[2].push(parseFloat(obj[i].h || 0));
 			lastAddedTS = timestamp;
 		}
 		chart = c3.generate({
