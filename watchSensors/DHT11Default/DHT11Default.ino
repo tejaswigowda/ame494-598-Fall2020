@@ -12,7 +12,7 @@ const char* ssid = "NETGEAR31";
 const char* password = "fluffywind2904";
 
 //Your Domain name with URL path or IP address with path
-const char* serverName = "http://192.168.0.235:1234/sendData";
+const char* serverName = "http://13.56.213.25:1234/sendData";
 
 // the following variables are unsigned longs because the time, measured in
 // milliseconds, will quickly become a bigger number than can be stored in an int.
@@ -32,6 +32,31 @@ int pinDHT11 = 25;
 SimpleDHT11 dht11(pinDHT11);
 
 
+String httpGETRequest(const char* serverName) {
+  HTTPClient http;
+    
+  // Your IP address with path or Domain name with URL path 
+  http.begin(serverName);
+  
+  // Send HTTP POST request
+  int httpResponseCode = http.GET();
+  
+  String payload = "{}"; 
+  
+  if (httpResponseCode>0) {
+    Serial.print("HTTP Response code: ");
+    Serial.println(httpResponseCode);
+    payload = http.getString();
+  }
+  else {
+    Serial.print("Error code: ");
+    Serial.println(httpResponseCode);
+  }
+  // Free resources
+  http.end();
+
+  return payload;
+}
 
 void setup() {
   Serial.begin(115200);
@@ -93,31 +118,4 @@ void loop() {
 
   // DHT11 sampling rate is 1HZ.
   delay(3500);
-}
-
-
-String httpGETRequest(const char* serverName) {
-  HTTPClient http;
-    
-  // Your IP address with path or Domain name with URL path 
-  http.begin(serverName);
-  
-  // Send HTTP POST request
-  int httpResponseCode = http.GET();
-  
-  String payload = "{}"; 
-  
-  if (httpResponseCode>0) {
-    Serial.print("HTTP Response code: ");
-    Serial.println(httpResponseCode);
-    payload = http.getString();
-  }
-  else {
-    Serial.print("Error code: ");
-    Serial.println(httpResponseCode);
-  }
-  // Free resources
-  http.end();
-
-  return payload;
 }

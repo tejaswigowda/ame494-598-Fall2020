@@ -54,7 +54,7 @@ app.get("/getValue", function (req, res) {
   res.send(VALUEt.toString() + " " + VALUEh + " " + VALUEtime + "\r");
 });
 
-app.get("sendData", function (req, res) {
+app.get("/sendData", function (req, res) {
   VALUEt = parseFloat(req.query.t);
   VALUEh = parseFloat(req.query.h);
   VALUEtime = new Date().getTime();
