@@ -9,13 +9,15 @@ function getDataFromServer()
 		console.log(data, typeof data);
 		var args = data.split(" ");
 		console.log(args);
-		var t = args[0]*1.8+32;
-		var h = args[1];
-		var time = args[2];
+		var x = args[0];
+		var y = args[1];
+		var z = args[2];
+		var time = args[3];
 
 		var output =
-		"<h2> Temperature </h2> <p>" + t + " &deg; F</p>"+
-		"<h2> Humidity </h2> <p>" + h + " %</p>"+
+		"<h2> X </h2> <p>" + x + " </p>"+
+		"<h2> Y </h2> <p>" + y + " </p>"+
+		"<h2> Z </h2> <p>" + z + " </p>"+
 		"<p> at " + new Date(parseInt(time)).toString() + "</p>";
 
 		document.getElementById("data").innerHTML = output;
