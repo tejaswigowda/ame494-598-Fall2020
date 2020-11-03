@@ -15,7 +15,7 @@ const char* ssid = "NETGEAR31";
 const char* password = "fluffywind2904";
 
 //Your Domain name with URL path or IP address with path
-const char* serverName = "http://192.168.0.234:1234/sendData";
+const char* serverName = "http://13.56.213.25:1234/sendData";
 
 // the following variables are unsigned longs because the time, measured in
 // milliseconds, will quickly become a bigger number than can be stored in an int.
@@ -23,7 +23,7 @@ unsigned long lastTime = 0;
 // Timer set to 10 minutes (600000)
 //unsigned long timerDelay = 600000;
 // Set timer to 5 seconds (5000)
-unsigned long timerDelay = 300;
+unsigned long timerDelay = 10;
 
 String response;
 
@@ -128,7 +128,15 @@ void loop() {
 
     // Get acceleration data
       bool res = sensor->getAccel(acc);
-    
+
+      tft->fillRect(98, 100, 70, 85, TFT_BLACK);
+      tft->setCursor(80, 100);
+      tft->print("X:"); tft->println(acc.x);
+      tft->setCursor(80, 130);
+      tft->print("Y:"); tft->println(acc.y);
+      tft->setCursor(80, 160);
+      tft->print("Z:"); tft->println(acc.z);
+        
       int x = acc.x;
       int y = acc.y;
       int z = acc.z;
@@ -136,6 +144,10 @@ void loop() {
       Serial.println(url);       
       response = httpGETRequest(url.c_str());
       Serial.println(response);
+
+
+      
+
 
     }
     else {

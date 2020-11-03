@@ -6,8 +6,9 @@ var errorHandler = require('errorhandler');
 var methodOverride = require('method-override');
 var hostname = process.env.HOSTNAME || 'localhost';
 var port = 1234;
-var VALUEt = 0;
-var VALUEh = 0;
+var VALUEx = 0;
+var VALUEy = 0;
+var VALUEz = 0;
 var VALUEtime = 0;
 
 
@@ -51,16 +52,18 @@ app.get("/getData", function (req, res) {
 
 app.get("/getValue", function (req, res) {
   //res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.send(VALUEt.toString() + " " + VALUEh + " " + VALUEtime + "\r");
+  res.send(VALUEx.toString() + " " + VALUEy + " " + VALUEz + " " + VALUEtime + "\r");
 });
 
 app.get("/sendData", function (req, res) {
-  VALUEt = parseFloat(req.query.t);
-  VALUEh = parseFloat(req.query.h);
+  VALUEx = parseFloat(req.query.x);
+  VALUEy = parseFloat(req.query.y);
+  VALUEz = parseFloat(req.query.z);
   VALUEtime = new Date().getTime();
 	var dataObj = {
-		t: VALUEt,
-		h: VALUEh,
+		x: VALUEx,
+		y: VALUEy,
+		z: VALUEz,
 		time: VALUEtime
 	}
 	db.collection("data").insert(dataObj, function(err,result){
