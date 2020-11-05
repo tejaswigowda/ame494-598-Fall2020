@@ -11,7 +11,7 @@ var VALUEh = 0;
 var VALUEtime = 0;
 
 
-var db = MS.db("mongodb://localhost:27017/sensorData")
+var db = MS.db("mongodb://13.56.213.25:27017/sensorData")
 app.get("/", function (req, res) {
     res.redirect("/index.html");
 });
@@ -43,6 +43,7 @@ app.get("/getLatest", function (req, res) {
 app.get("/getData", function (req, res) {
   var from = parseInt(req.query.from);
   var to = parseInt(req.query.to);
+  console.log(to-from);
   db.collection("data").find({time:{$gt:from, $lt:to}}).sort({time:-1}).toArray(function(err, result){
     res.send(JSON.stringify(result));
   });
