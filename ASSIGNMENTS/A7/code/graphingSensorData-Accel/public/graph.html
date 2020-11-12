@@ -13,13 +13,14 @@ function getDataFromServer()
 	var url = "./getLatest"
 	var callback = function(data){
 		var obj = JSON.parse(data);
-		var columns = [["x"],["Temperature"],["Humidity"]]
+		var columns = [["x"],["X"],["Y"],["Z"]]
 		for(var i = 0; i < obj.length; i++){
 			var timestamp = parseInt(obj[i].ts || obj[i].time);
 			if(timestamp > lastAddedTS){
 				columns[0].push(getTSInFormat(timestamp));
-				columns[1].push(parseFloat(obj[i].t || 0)*1.8+32);
-				columns[2].push(parseFloat(obj[i].h || 0));
+				columns[1].push(parseFloat(obj[i].x));
+				columns[2].push(parseFloat(obj[i].y));
+				columns[3].push(parseFloat(obj[i].z));
 				lastAddedTS = timestamp;
 			}
 		}
@@ -39,15 +40,15 @@ function start(){
 	var url = "./getLatest";
 	var callback = function(data){
 		var obj = JSON.parse(data);
-		var columns = [["x"],["Temperature"],["Humidity"]]
+		var columns = [["x"],["X"],["Y"],["Z"]]
 		for(var i = 0; i < obj.length; i++){
 			var timestamp = parseInt(obj[i].ts || obj[i].time);
       console.log(obj[i].ts);
       console.log(timestamp);
 			columns[0].push(getTSInFormat(timestamp));
-			columns[1].push(parseFloat(obj[i].t || 0)*1.8+32);
-			columns[2].push(parseFloat(obj[i].h || 0));
-			lastAddedTS = timestamp;
+			columns[1].push(parseFloat(obj[i].x));
+			columns[2].push(parseFloat(obj[i].y));
+			columns[3].push(parseFloat(obj[i].z));
 		}
 		chart = c3.generate({
     	bindto: '#data',
@@ -66,7 +67,7 @@ function start(){
     	}
 		});
 
-    setInterval("getDataFromServer()", 1000);
+    setInterval("getDataFromServer()", 100);
 
 	}
 	loadFile(url, callback);
@@ -79,7 +80,7 @@ function start(){
 </head>
 
 <body style='text-align:center; font-family:Helvetica' onload='start()'>
-	<h1> Weather Ticker </h1>
+	<h1> Accelerometer (Live) </h1>
 	<div id='data'></div>
 
 </body>

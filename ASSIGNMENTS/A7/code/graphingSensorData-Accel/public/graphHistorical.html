@@ -12,10 +12,8 @@ var chart;
 var lastAddedTS = 0;
 function start()
 {
-  document.getElementById("datetimeSelect").value = getTSInFormat(new Date().getTime());
 	flatpickr("#datetimeSelect", { enableTime: true,
     dateFormat: "Y-m-d H:i"});
-    getDataFromServer();
 }
 
 function getTSInFormat(t)
@@ -26,8 +24,8 @@ function getTSInFormat(t)
 
 function getDataFromServer(){
 
-  var to = new Date(document.getElementById("datetimeSelect").value).getTime();
-  var from = to -  parseInt(document.getElementById("duration").value) * 60 * 1000;
+  var from;
+  var to;
 
 	var url = "./getData?from=" + from +"&to=" + to;
 	var callback = function(data){

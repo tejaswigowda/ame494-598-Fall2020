@@ -6,12 +6,13 @@ var errorHandler = require('errorhandler');
 var methodOverride = require('method-override');
 var hostname = process.env.HOSTNAME || 'localhost';
 var port = 1234;
-var VALUEt = 0;
-var VALUEh = 0;
+var VALUEx = 0;
+var VALUEy = 0;
+var VALUEz = 0;
 var VALUEtime = 0;
 
 
-var db = MS.db("mongodb://13.56.213.25:27017/sensorData")
+var db = MS.db("mongodb://localhost:27017/sensorData")
 app.get("/", function (req, res) {
     res.redirect("/index.html");
 });
@@ -43,7 +44,6 @@ app.get("/getLatest", function (req, res) {
 app.get("/getData", function (req, res) {
   var from = parseInt(req.query.from);
   var to = parseInt(req.query.to);
-  console.log(to-from);
   db.collection("data").find({time:{$gt:from, $lt:to}}).sort({time:-1}).toArray(function(err, result){
     res.send(JSON.stringify(result));
   });
@@ -52,16 +52,18 @@ app.get("/getData", function (req, res) {
 
 app.get("/getValue", function (req, res) {
   //res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.send(VALUEt.toString() + " " + VALUEh + " " + VALUEtime + "\r");
+  res.send(VALUEx.toString() + " " + VALUEy + " " + VALUEz + " " + VALUEtime + "\r");
 });
 
 app.get("/sendData", function (req, res) {
-  VALUEt = parseFloat(req.query.t);
-  VALUEh = parseFloat(req.query.h);
+  VALUEx = parseFloat(req.query.x);
+  VALUEy = parseFloat(req.query.y);
+  VALUEz = parseFloat(req.query.z);
   VALUEtime = new Date().getTime();
 	var dataObj = {
-		t: VALUEt,
-		h: VALUEh,
+		x: VALUEx,
+		y: VALUEy,
+		z: VALUEz,
 		time: VALUEtime
 	}
 	db.collection("data").insert(dataObj, function(err,result){
