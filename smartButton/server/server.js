@@ -38,6 +38,7 @@ app.get("/sendEmail", function (req, res) {
        console.log('Email sent: ' + info.response);
      }
    });
+   res.send("1");
 });
 
 
