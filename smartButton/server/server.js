@@ -30,6 +30,7 @@ app.get("/", function (req, res) {
 
 app.get("/sendEmail", function (req, res) {
    // Send Email
+   console.log("button pressed");
    transporter.sendMail(mailOptions, function(error, info){
      if (error) {
    	console.log(error);
