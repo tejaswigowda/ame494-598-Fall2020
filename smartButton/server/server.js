@@ -1,3 +1,21 @@
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: '',
+    pass: '' // naturally, replace both with your real credentials or an application-specific password
+  }
+});
+
+const mailOptions = {
+  from: '',
+  to: '',
+  subject: 'test',
+  text: 'testing.'
+};
+
+
 var express = require("express");
 var app = express();
 var bodyParser = require('body-parser');
@@ -12,6 +30,13 @@ app.get("/", function (req, res) {
 
 app.get("/sendEmail", function (req, res) {
    // Send Email
+   transporter.sendMail(mailOptions, function(error, info){
+     if (error) {
+   	console.log(error);
+     } else {
+       console.log('Email sent: ' + info.response);
+     }
+   });
 });
 
 
