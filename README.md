@@ -11,7 +11,7 @@ JS Tutorial: https://w3schools.com/js/
 Install Node.js on EC2 Ubuntu: https://gist.github.com/tejaswigowda/f289e9bff13d152876e8d4b3281142f8
 <hr>
 
-8/20 - 8/27 [White Board](https://docs.google.com/presentation/d/1G7oTScIrkpOheQXkeKqElcCB8R8JAgQIY8kM14yCNEo/edit?usp=sharing)
+[White Board](https://docs.google.com/presentation/d/1G7oTScIrkpOheQXkeKqElcCB8R8JAgQIY8kM14yCNEo/edit?usp=sharing)
 
 
 
