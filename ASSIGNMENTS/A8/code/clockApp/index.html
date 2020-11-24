@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, max-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script>
+  var myTZs = [
+    -7, -12, 6
+  ];
+
+  function start(){
+    $('select').formSelect();
+    closeSettings();
+  }
+  function generateClockMU(){
+    myTZs = $("#DropDownTimezone option:selected")
+    var markup = "<button onclick='tzSelected(-1)' class='oneTZ'><iframe src='clock100.html#'></iframe><p>Default</p></button>"
+    for(var i = 0; i < myTZs.length;i++){
+      markup += 
+        "<button class='oneTZ' onclick='tzSelected("+ i +")'>"+
+        "<iframe src='clock100.html#" + myTZs[i].value + "'></iframe>"+
+       "<p>" + myTZs[i].text + "</p>"+
+        "</button>"
+    }
+    document.getElementById("tzList").innerHTML = markup;
+  }
+  
+  function tzSelected(n){
+    var x = "";
+    var y = "Default";
+    if(n > -1){
+      x = "#" + myTZs[n].value;
+      y = myTZs[n].text
+    }
+    var markup = "<iframe src='clock.html" + x + "'></iframe>"+
+       "<h1>" + y + "</h1>"
+    document.getElementById("theClock").innerHTML = markup;
+
+    $(".oneTZ").removeClass("selected");
+    $(".oneTZ:nth-of-type(" + (n+2)+ ")").addClass("selected");
+    $("body").addClass("clockMode")
+  }
+
+  function goBack(){
+    $("body").removeClass("clockMode")
+    $(".oneTZ").removeClass("selected");
+  }
+
+  function closeSettings(){
+    $("#settings").fadeOut();
+    generateClockMU();
+  }
+  function editTZs(){
+    $("#settings").fadeIn();
+    $(".select-dropdown.dropdown-trigger").click()
+  }
+  </script>
+</head>
+<body onload='start()'>
+  <div id='tzList'>
+  </div>
+  <div id='theClock'>
+  </div>
+    <a href='javascript:editTZs()' id='editButton' class="btn-floating btn-large waves-effect waves-light red" style='position:fixed;right:10px;top:10px;z-index:0'><i class="material-icons">create</i></a>
+
+    <a href='javascript:goBack()' id='backButton' class="btn-floating btn-large waves-effect waves-light red" style='position:fixed;left:10px;top:10px;z-index:0'><i class="material-icons">arrow_back</i></a>
+
+  <div id='settings'>
+    <a href='javascript:closeSettings()' class="btn-floating btn-large waves-effect waves-light blue" style='position:fixed;right:10px;top:10px;z-index:99999999999'><i class="material-icons">check</i></a>
+    <select style='width:90%;margin-left:5%' multiple name="DropDownTimezone" id="DropDownTimezone">
+      <option value="default" disabled>Default</option>
+      <option value="-12.0">(GMT -12:00) Eniwetok, Kwajalein</option>
+      <option value="-11.0">(GMT -11:00) Midway Island, Samoa</option>
+      <option value="-10.0">(GMT -10:00) Hawaii</option>
+      <option value="-9.0">(GMT -9:00) Alaska</option>
+      <option value="-8.0">(GMT -8:00) Pacific Time (US &amp; Canada)</option>
+      <option value="-7.0">(GMT -7:00) Mountain Time (US &amp; Canada)</option>
+      <option value="-6.0">(GMT -6:00) Central Time (US &amp; Canada), Mexico City</option>
+      <option value="-5.0">(GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima</option>
+      <option value="-4.0">(GMT -4:00) Atlantic Time (Canada), Caracas, La Paz</option>
+      <option value="-3.5">(GMT -3:30) Newfoundland</option>
+      <option value="-3.0">(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
+      <option value="-2.0">(GMT -2:00) Mid-Atlantic</option>
+      <option value="-1.0">(GMT -1:00 hour) Azores, Cape Verde Islands</option>
+      <option value="0.0">(GMT) Western Europe Time, London, Lisbon, Casablanca</option>
+      <option value="1.0">(GMT +1:00 hour) Brussels, Copenhagen, Madrid, Paris</option>
+      <option value="2.0">(GMT +2:00) Kaliningrad, South Africa</option>
+      <option value="3.0">(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
+      <option value="3.5">(GMT +3:30) Tehran</option>
+      <option value="4.0">(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
+      <option value="4.5">(GMT +4:30) Kabul</option>
+      <option value="5.0">(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent</option>
+      <option value="5.5">(GMT +5:30) Bombay/Mumbai, Calcutta/Kolkata, Madras/Chennai, New Delhi, Bangalore</option>
+      <option value="5.75">(GMT +5:45) Kathmandu</option>
+      <option value="6.0">(GMT +6:00) Almaty, Dhaka, Colombo</option>
+      <option value="7.0">(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
+      <option value="8.0">(GMT +8:00) Beijing, Perth, Singapore, Hong Kong</option>
+      <option value="9.0">(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk</option>
+      <option value="9.5">(GMT +9:30) Adelaide, Darwin</option>
+      <option value="10.0">(GMT +10:00) Eastern Australia, Guam, Vladivostok</option>
+      <option value="11.0">(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
+      <option value="12.0">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
+</select>
+  </div>
+
+</body>
+<style>
+  .selected{
+    background: #2ab7a9;
+  }
+  #tzList {
+    width: 30vw;
+    height: 100vh;
+    overflow-y:auto;
+    background:gray;
+  }
+  #theClock{
+    width: 70vw;
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+  }
+  #theClock h1{
+    position: fixed;
+    width: calc(100% - 300px);
+    bottom: 0px;
+    right: 0px;
+    text-align:center;
+    font-weight:bold;
+    font-size: 16px;
+  }
+
+  #theClock iframe{
+    width: 100%;
+    height: 100%;
+  }
+
+  #tzList .oneTZ{
+    width: 100%;
+    height: auto;
+    text-align:left;
+    margin:0;
+    padding:0;
+  }
+  #tzList p{
+    width: calc(100% - 110px);
+    float: right;
+  }
+  #tzList iframe{
+    height: 100px;
+    width: 100px;
+    border: none;
+    width: 100px;
+  }
+
+  #settings{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: white;
+  }
+  #backButton{
+    display:none; 
+  }
+  @media (max-width: 600px){
+    #tzList{
+      width: 100vw;
+    }
+    #theClock{
+      width: 100vw;
+      display:none;
+    }
+
+    .clockMode #tzList{
+      display: none;
+    }
+    .clockMode #theClock{
+      display: block;
+    }
+    .clockMode #backButton{
+      display:block;
+    }
+    .clockMode #editButton{
+      display:none;
+    }
+    #theClock h1{
+      width: 100vw;
+    }
+  }
+  .select-dropdown.dropdown-trigger
+  {
+    opacity:0;
+  }
+
+</style>
+</html>
